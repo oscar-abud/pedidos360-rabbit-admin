@@ -1,5 +1,11 @@
 import "dotenv/config";
 
+// Acepta el host con o sin protocolo (en CloudAMQP se copia solo el host).
+function withProtocol(url) {
+  if (!url) return url;
+  return (/^https?:\/\//i.test(url) ? url : `https://${url}`).replace(/\/+$/, "");
+}
+
 function required(value, key) {
   if (!value || value.trim() === "") {
     console.warn(`[config] Falta ${key} en .env`);
@@ -19,7 +25,7 @@ export const env = {
     .map((origin) => origin.trim())
     .filter(Boolean),
 
-  rabbitManagementUrl: required(process.env.RABBITMQ_MANAGEMENT_URL, "RABBITMQ_MANAGEMENT_URL").replace(/\/+$/, ""),
+  rabbitManagementUrl: withProtocol(required(process.env.RABBITMQ_MANAGEMENT_URL, "RABBITMQ_MANAGEMENT_URL")),
   rabbitManagementUser: required(process.env.RABBITMQ_MANAGEMENT_USER, "RABBITMQ_MANAGEMENT_USER"),
   rabbitManagementPassword: required(process.env.RABBITMQ_MANAGEMENT_PASSWORD, "RABBITMQ_MANAGEMENT_PASSWORD"),
   rabbitVhost: process.env.RABBITMQ_VHOST || "/",
