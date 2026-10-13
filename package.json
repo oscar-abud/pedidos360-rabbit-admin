@@ -1,0 +1,28 @@
+{
+  "name": "pedidos360-rabbit-admin",
+  "version": "1.0.0",
+  "description": "Microservicio administrador de RabbitMQ de Pedidos360: API REST para crear y eliminar colas, exchanges y bindings (solo Admin)",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.20.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.3.0",
+    "jose": "^6.2.12",
+    "zod": "^3.25.76"
+  }
+}
