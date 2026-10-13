@@ -17,12 +17,14 @@ app.use(
 );
 app.use(express.json());
 
-// Público: health check (incluye si la API de Management responde).
+// Público: health check. Siempre 200 si el proceso está vivo (Render lo usa
+// para dar el deploy por bueno); el estado de RabbitMQ va en el cuerpo, así
+// una credencial mal escrita no deja el deploy colgado.
 app.get("/health", async (req, res) => {
   try {
     res.json({ status: "ok", rabbitmq: await RabbitAdminService.health() });
   } catch (error) {
-    res.status(503).json({ status: "degradado", message: error.message });
+    res.json({ status: "degradado", rabbitmq: { error: error.message } });
   }
 });
 
